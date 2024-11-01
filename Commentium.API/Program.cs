@@ -1,3 +1,4 @@
+using Commentium.Persistence;
 
 namespace Commentium.API
 {
@@ -9,6 +10,8 @@ namespace Commentium.API
 
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddPersistence(builder.Configuration);
 
             var app = builder.Build();
 
