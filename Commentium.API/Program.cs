@@ -1,4 +1,5 @@
 using Commentium.Persistence;
+using Commentium.Application;
 
 namespace Commentium.API
 {
@@ -12,6 +13,7 @@ namespace Commentium.API
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddPersistence(builder.Configuration);
+            builder.Services.AddApplication();
 
             var app = builder.Build();
 
