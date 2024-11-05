@@ -1,4 +1,6 @@
-﻿namespace Commentium.Application.Comments.Get
+﻿using System.Text.Json.Serialization;
+
+namespace Commentium.Application.Comments.Get
 {
     public class PagedList<T>
     {
@@ -14,13 +16,15 @@
             TotalCount = totalCount;
         }
 
-        public List<T> Items { get; }
+        private PagedList() { }
 
-        public int Page { get; }
+        public List<T> Items { get; private set; }
 
-        public int PageSize { get; }
+        public int Page { get; private set; }
 
-        public int TotalCount { get; }
+        public int PageSize { get; private set; }
+
+        public int TotalCount { get; private set; }
 
         public bool HasNextPage => Page * PageSize < TotalCount;
 

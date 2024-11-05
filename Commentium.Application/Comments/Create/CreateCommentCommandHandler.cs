@@ -1,4 +1,5 @@
-﻿using Commentium.Domain.Comments;
+﻿using Commentium.Application.Abstractions.Caching;
+using Commentium.Domain.Comments;
 using Commentium.Domain.Shared;
 using Commentium.Domain.Users;
 using MediatR;
@@ -11,11 +12,16 @@ namespace Commentium.Application.Comments.Create
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ICacheService _cacheService;
 
-        public CreateCommentCommandHandler(ICommentRepository commentRepository, IUserRepository userRepository)
+        public CreateCommentCommandHandler(
+            ICommentRepository commentRepository,
+            IUserRepository userRepository,
+            ICacheService cacheService)
         {
             _commentRepository = commentRepository;
             _userRepository = userRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<Result> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
@@ -66,6 +72,8 @@ namespace Commentium.Application.Comments.Create
             }
 
             await _commentRepository.Add(comment);
+
+            await _cacheService.RemoveByPrefixAsync("comments", cancellationToken);
 
             return Result.Success();
         }

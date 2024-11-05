@@ -12,6 +12,7 @@ namespace Commentium.API
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDistributedMemoryCache();
             builder.Services.AddPersistence(builder.Configuration);
             builder.Services.AddApplication();
 

@@ -1,4 +1,5 @@
-﻿using Commentium.Domain.Comments;
+﻿using Commentium.Application.Abstractions.Caching;
+using Commentium.Domain.Comments;
 using Commentium.Domain.Shared;
 using Commentium.Domain.Users;
 using MediatR;
@@ -11,29 +12,45 @@ namespace Commentium.Application.Comments.Get
     {
         private readonly IUserRepository _userRepository;
         private readonly ICommentRepository _commentRepository;
+        private readonly ICacheService _cacheService;
 
-        public GetCommentsQueryHandler(IUserRepository userRepository, ICommentRepository commentRepository)
+        public GetCommentsQueryHandler(
+            IUserRepository userRepository,
+            ICommentRepository commentRepository,
+            ICacheService cacheService)
         {
             _userRepository = userRepository;
             _commentRepository = commentRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<Result<PagedList<CommentResponse>>> Handle(GetCommentsQuery request, CancellationToken cancellationToken)
         {
+            var cacheKey = $"comments_{request.Page}_{request.PageSize}_{request.SortColumn}_{request.SortOrder}";
+            PagedList<CommentResponse>? commentResponses = await _cacheService
+                .GetAsync<PagedList<CommentResponse>>(cacheKey, cancellationToken);
+
+            if (commentResponses is not null)
+            {
+                return commentResponses;
+            }
+
             var commentsQuery = await GetCommentResponsesAsync();
 
-            if (request.SortOrder?.ToLower() == "desc") 
+            if (request.SortOrder?.ToLower() == "desc")
             {
                 commentsQuery = commentsQuery.OrderByDescending(GetSortProperty(request)).ToList();
             }
-            else 
+            else
             {
                 commentsQuery = commentsQuery.OrderBy(GetSortProperty(request)).ToList();
             }
 
-            var comments = PagedList<CommentResponse>.Create(commentsQuery, request.Page, request.PageSize);
+            commentResponses = PagedList<CommentResponse>.Create(commentsQuery, request.Page, request.PageSize);
 
-            return comments;
+            await _cacheService.SetAsync(cacheKey, commentResponses, cancellationToken);
+
+            return commentResponses;
         }
 
         private async Task<List<CommentResponse>> GetCommentResponsesAsync(Guid? parentCommentId = null) 

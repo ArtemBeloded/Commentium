@@ -1,5 +1,7 @@
-﻿using Commentium.Domain.Comments;
+﻿using Commentium.Application.Abstractions.Caching;
+using Commentium.Domain.Comments;
 using Commentium.Domain.Users;
+using Commentium.Persistence.Caching;
 using Commentium.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,8 @@ namespace Commentium.Persistence
 
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddSingleton<ICacheService, CacheService>();
 
             return services;
         }

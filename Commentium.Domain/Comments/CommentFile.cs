@@ -5,7 +5,7 @@ namespace Commentium.Domain.Comments
 {
     public class CommentFile
     {
-        private const int MaxTextFileLenght = 100 * 1024; 
+        private const int MaxTextFileLenght = 100 * 1024;
 
         private CommentFile(
             Guid id,
@@ -20,6 +20,8 @@ namespace Commentium.Domain.Comments
             ContentType = contentType;
             Content = content;
         }
+
+        private CommentFile() { }
 
         public Guid Id { get; private set; }
 
