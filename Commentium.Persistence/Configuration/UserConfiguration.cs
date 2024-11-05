@@ -15,6 +15,9 @@ namespace Commentium.Persistence.Configuration
 
             builder.Property(e => e.Email)
                 .HasMaxLength(60);
+
+            builder.HasIndex(e => e.Email)
+                .IsUnique();
         }
     }
 }

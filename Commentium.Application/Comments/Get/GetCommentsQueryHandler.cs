@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Commentium.Application.Comments.Get
 {
     internal sealed class GetCommentsQueryHandler
-        : IRequestHandler<GetCommentsQuery, Result<List<CommentResponse>>>
+        : IRequestHandler<GetCommentsQuery, Result<PagedList<CommentResponse>>>
     {
         private readonly IUserRepository _userRepository;
         private readonly ICommentRepository _commentRepository;
@@ -18,7 +18,7 @@ namespace Commentium.Application.Comments.Get
             _commentRepository = commentRepository;
         }
 
-        public async Task<Result<List<CommentResponse>>> Handle(GetCommentsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<CommentResponse>>> Handle(GetCommentsQuery request, CancellationToken cancellationToken)
         {
             var commentsQuery = await GetCommentResponsesAsync();
 
@@ -31,9 +31,9 @@ namespace Commentium.Application.Comments.Get
                 commentsQuery = commentsQuery.OrderBy(GetSortProperty(request)).ToList();
             }
 
-            //to do pagination
+            var comments = PagedList<CommentResponse>.Create(commentsQuery, request.Page, request.PageSize);
 
-            return commentsQuery;
+            return comments;
         }
 
         private async Task<List<CommentResponse>> GetCommentResponsesAsync(Guid? parentCommentId = null) 
@@ -51,8 +51,7 @@ namespace Commentium.Application.Comments.Get
                 c.Text,
                 c.AttachedFile != null ? c.AttachedFile : null,
                 c.CreatedDate,
-                GetCommentResponsesAsync(c.Id).Result))
-                .ToList();
+                GetCommentResponsesAsync(c.Id).Result)).ToList();
 
             return commentResponse;
         }

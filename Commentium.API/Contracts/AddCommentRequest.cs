@@ -3,5 +3,6 @@
     public record AddCommentRequest(
         string UserName,
         string Email,
-        string Text);
+        string Text,
+        IFormFile? File);
 }

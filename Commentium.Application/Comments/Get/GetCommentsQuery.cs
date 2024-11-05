@@ -7,5 +7,5 @@ namespace Commentium.Application.Comments.Get
         string? SortColumn,
         string? SortOrder,
         int Page,
-        int PageSize) : IRequest<Result<List<CommentResponse>>>;
+        int PageSize) : IRequest<Result<PagedList<CommentResponse>>>;
 }

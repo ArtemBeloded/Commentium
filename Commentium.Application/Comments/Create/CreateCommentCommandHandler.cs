@@ -2,6 +2,7 @@
 using Commentium.Domain.Shared;
 using Commentium.Domain.Users;
 using MediatR;
+using static Commentium.Domain.Errors.DomainErrors;
 
 namespace Commentium.Application.Comments.Create
 {
@@ -19,14 +20,13 @@ namespace Commentium.Application.Comments.Create
 
         public async Task<Result> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
         {
-            //check if user with this user name and email exist???
             var user = await _userRepository.GetByEmail(request.Email);
 
-            if (user is null) 
+            if (user is null)
             {
                 var userCreateResult = User.Create(request.UserName, request.Email);
 
-                if (userCreateResult.IsFailure) 
+                if (userCreateResult.IsFailure)
                 {
                     return Result.Failure(userCreateResult.Error);
                 }
@@ -34,6 +34,10 @@ namespace Commentium.Application.Comments.Create
                 await _userRepository.Add(userCreateResult.Value);
 
                 user = userCreateResult.Value;
+            }
+            else if (user.UserName != request.UserName) 
+            {
+                return Result.Failure(UserErrors.InvalidUserName);
             }
 
             var commentCreateResult = Comment.Create(user.Id, request.Text);
@@ -43,7 +47,25 @@ namespace Commentium.Application.Comments.Create
                 return Result.Failure(commentCreateResult.Error);
             }
 
-            await _commentRepository.Add(commentCreateResult.Value);
+            var comment = commentCreateResult.Value;
+
+            if (request.File is not null) 
+            {
+                var commentFileResult = CommentFile.Create(
+                    comment.Id,
+                    request.File.FileName,
+                    request.File.ContentType,
+                    request.File.FileData);
+
+                if (commentFileResult.IsFailure) 
+                {
+                    return Result.Failure(commentFileResult.Error);
+                }
+
+                comment.AttachFile(commentFileResult.Value);
+            }
+
+            await _commentRepository.Add(comment);
 
             return Result.Success();
         }

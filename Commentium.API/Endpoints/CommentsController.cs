@@ -1,5 +1,6 @@
 ﻿using Commentium.API.Contracts;
 using Commentium.API.Extensions;
+using Commentium.API.Helpers;
 using Commentium.Application.Comments.Create;
 using Commentium.Application.Comments.Get;
 using Commentium.Domain.Shared;
@@ -24,7 +25,13 @@ namespace Commentium.API.Endpoints
             var command = new CreateCommentCommand(
                 request.UserName,
                 request.Email,
-                request.Text);
+                request.Text,
+                request.File is null ?
+                null
+                : new CreateCommentFileCommand(
+                    request.File.FileName,
+                    request.File.ContentType,
+                    CommentFileDataConverter.ConvertCommentFileToByteArray(request.File)));
             Result result = await _sender.Send(command);
 
             return result.IsSuccess ? Results.Ok() : result.ToProblemDetails();
@@ -33,12 +40,12 @@ namespace Commentium.API.Endpoints
         [HttpGet]
         public async Task<IResult> GetComments(
             string? sortColumn,
-            string? sortOrder,
+            string? sortOrder = "desc",
             int page = 1,
-            int pageSize = 25) 
+            int pageSize = 25)
         {
             var query = new GetCommentsQuery(sortColumn, sortOrder, page, pageSize);
-            Result<List<CommentResponse>> result = await _sender.Send(query);
+            Result<PagedList<CommentResponse>> result = await _sender.Send(query);
 
             return result.IsSuccess ? Results.Ok(result.Value) : result.ToProblemDetails();
         }
