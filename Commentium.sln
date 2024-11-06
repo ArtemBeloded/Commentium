@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commentium.API", "Commentium.API\Commentium.API.csproj", "{E16FE34D-B71D-4809-B318-540B3CFB2F1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commentium.API", "Commentium.API\Commentium.API.csproj", "{E16FE34D-B71D-4809-B318-540B3CFB2F1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commentium.Application", "Commentium.Application\Commentium.Application.csproj", "{B5350F28-14C8-4F64-97A8-08785EB60D8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commentium.Application", "Commentium.Application\Commentium.Application.csproj", "{B5350F28-14C8-4F64-97A8-08785EB60D8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commentium.Domain", "Commentium.Domain\Commentium.Domain.csproj", "{97251937-7A79-4668-8501-61853F192A04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commentium.Domain", "Commentium.Domain\Commentium.Domain.csproj", "{97251937-7A79-4668-8501-61853F192A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commentium.Persistence", "Commentium.Persistence\Commentium.Persistence.csproj", "{7081DE12-4167-4322-B8F7-1474DD12C1F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commentium.Persistence", "Commentium.Persistence\Commentium.Persistence.csproj", "{7081DE12-4167-4322-B8F7-1474DD12C1F6}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7C534B45-A586-45CB-8309-0455014EECFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7081DE12-4167-4322-B8F7-1474DD12C1F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7081DE12-4167-4322-B8F7-1474DD12C1F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7081DE12-4167-4322-B8F7-1474DD12C1F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C534B45-A586-45CB-8309-0455014EECFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C534B45-A586-45CB-8309-0455014EECFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C534B45-A586-45CB-8309-0455014EECFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C534B45-A586-45CB-8309-0455014EECFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

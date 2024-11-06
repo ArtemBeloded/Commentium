@@ -46,7 +46,7 @@ namespace Commentium.Persistence.Caching
         {
             string cacheValue = JsonConvert.SerializeObject(value);
 
-            await _distributedCache.SetStringAsync(key, cacheValue, cancellationToken);
+            await _distributedCache.SetStringAsync(key, cacheValue, CacheOption.DefaultExpiration, cancellationToken);
 
             CacheKeys.TryAdd(key, false);
         }

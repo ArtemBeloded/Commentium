@@ -1,0 +1,31 @@
+services:
+  commentium.api:
+    image: ${DOCKER_REGISTRY-}commentiumapi
+    container_name: commentium-api
+    build:
+      context: .
+      dockerfile: Commentium.API/Dockerfile
+    ports:
+      - "5000"
+      - "5001"
+      
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: commentium.database
+    environment:
+        SA_PASSWORD: "Password12345!"
+        ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlvolume:/var/opt/mssql  
+  
+  commentium.cache:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+
+
+volumes:
+  sqlvolume:

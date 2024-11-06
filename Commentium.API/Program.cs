@@ -1,5 +1,6 @@
 using Commentium.Persistence;
 using Commentium.Application;
+using Commentium.API.Extensions;
 
 namespace Commentium.API
 {
@@ -12,9 +13,17 @@ namespace Commentium.API
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddStackExchangeRedisCache(redisOptions =>
+            {
+                string connection = builder.Configuration
+                    .GetConnectionString("Redis");
+
+                redisOptions.Configuration = connection;
+            });
+
             builder.Services.AddPersistence(builder.Configuration);
             builder.Services.AddApplication();
+
 
             var app = builder.Build();
 
@@ -22,6 +31,7 @@ namespace Commentium.API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.ApplyMigrations();
             }
 
             app.UseHttpsRedirection();
