@@ -1,29 +1,20 @@
-
-
-  //-----------------------------------------------------------------
-
-
-
-
-
-
 .comments {
-  background-color: white;  // Мягкий светло-серый фон
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); // Легкая тень для объема
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .comments-title {
   font-size: 1.5rem;
-  color: #4a4a4a;              // Спокойный тёмно-серый цвет текста
-  text-align: center;          // Центрирование текста
+  color: #4a4a4a;
+  text-align: center;
   font-weight: bold;
   margin: 0;
 }
 
 .comment-form-container {
-  background-color: #fff;                // Белый фон для контейнера
-  border-radius: 10px;                    // Закругленные углы для рамки
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);   // Легкая тень вокруг формы
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   max-width: 600px;
   margin: 20px auto;
@@ -31,11 +22,11 @@
 
 .comment-form-title {
   font-size: 1.4rem;
-  color: #3a4e75;                         // Цвет заголовка
+  color: #3a4e75;
   font-weight: bold;
   text-align: center;
   padding-bottom: 10px;
-  border-bottom: 2px solid #f0f2f5;      // Легкая линия под заголовком
+  border-bottom: 2px solid #f0f2f5;
   margin-bottom: 15px;
 }
 
@@ -119,14 +110,12 @@ button {
 }
 
 .image-preview img {
-  width: 160px; /* Превью в два раза меньше */
+  width: 160px;
   height: 120px;
   object-fit: cover;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
-
-
 
 .text-preview {
   border: 1px solid #ccc;
@@ -152,7 +141,7 @@ button {
   position: absolute;
   top: 5px;
   right: 5px;
-  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный темный фон */
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
   border-radius: 50%;
@@ -163,18 +152,12 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s; /* Плавное изменение цвета */
+  transition: background-color 0.3s;
 }
 
 .delete-button:hover {
-  background-color: rgba(0, 0, 0, 0.7); /* Увеличенная прозрачность при наведении */
+  background-color: rgba(0, 0, 0, 0.7);
 }
-
-
-
-
-
-
 
 .text-modal {
   display: flex;
@@ -226,19 +209,18 @@ button {
 }
 
 .captcha-canvas {
-  width: 160px;           /* Ширина canvas */
-  height: 120px;          /* Высота canvas */
-  border: 2px solid #ccc;  /* Цвет и толщина рамки */
-  border-radius: 4px;     /* Скругление углов */
-  padding: 4px;           /* Отступ внутри рамки */
-  box-sizing: border-box; /* Учитывает рамку и padding */
-  margin-bottom: 10px;    /* Отступ снизу, чтобы не наезжала на поле ввода */
+  width: 160px;
+  height: 120px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
-
 .toast-warning {
-  background-color: #f5e0a3 !important; /* Светло-песочный */
-  color: #3d3d3d !important; /* Темно-серый текст */
+  background-color: #f5e0a3 !important;
+  color: #3d3d3d !important;
   font-weight: normal;
   padding: 12px;
   border-radius: 5px;
@@ -252,24 +234,22 @@ button {
   border-radius: 5px;
 }
 
-
-//----------------------------------------------------
 .comment {
-  background-color: white; /* Белый фон для карточки */
-  border-radius: 8px; /* Закругленные углы */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
-  margin-bottom: 20px; /* Отступ между карточками */
-  max-width: 800px; /* Увеличиваем максимальную ширину комментария */
-  width: 100%; /* Ширина комментария по умолчанию на 100% родительского контейнера */
-  margin-left: 10px; /* Легкий сдвиг вправо */
-  margin-right: auto; /* Центрируем комментарий слева */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  max-width: 800px;
+  width: 100%;
+  margin-left: 10px;
+  margin-right: auto;
   justify-content: space-between;
 }
 
 .comment-header {
   display: flex;
   align-items: center;
-  background-color: #f0f2f5; /* Светлый фон для хедера */
+  background-color: #f0f2f5;
   padding: 10px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -285,7 +265,7 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%; /* Круглая аватарка */
+  border-radius: 50%;
 }
 
 .comment-info {
@@ -296,12 +276,12 @@ button {
 
 .comment-author {
   font-weight: bold;
-  color: #3a4e75; /* Цвет для имени пользователя */
+  color: #3a4e75;
 }
 
 .comment-date {
-  font-size: 0.875rem; /* Меньший размер шрифта */
-  color: #888; /* Светло-серый цвет для даты */
+  font-size: 0.875rem;
+  color: #888;
 }
 
 .comment-action-container {
@@ -313,29 +293,30 @@ button {
 .comment-action {
   font-size: 0.875rem;
   font-weight: bold;
-  color: #3a4e75; /* Цвет текста */
+  color: #3a4e75;
   cursor: pointer;
-  transition: color 0.3s ease; /* Плавное изменение цвета */
-  margin-left: 10px; /* Отступ слева от даты */
+  transition: color 0.3s ease;
+  margin-left: 10px;
 }
 
 .comment-action:hover {
-  color: #2c3e50; /* Цвет при наведении */
+  color: #2c3e50;
 }
 
 .comment-body {
-  padding: 15px;
+  margin-top: 10px;
+  padding: 10px;
 }
 
 .comment-text {
   font-size: 1rem;
-  color: #4a4a4a; /* Цвет текста комментария */
+  color: #4a4a4a;
   line-height: 1.5;
-  white-space: pre-wrap; /* Поддержка переноса строк в комментарии */
+  white-space: pre-wrap;
 }
 
 .comment-text a {
-  color: #3a4e75; /* Цвет ссылок в комментарии */
+  color: #223e75;
   text-decoration: none;
 }
 
@@ -346,135 +327,171 @@ button {
 .comment-actions {
   padding: 10px 15px;
   display: flex;
-  justify-content: flex-start; /* Выравнивание вправо */
+  justify-content: flex-start;
 }
 
 .comment-action {
   font-size: 0.875rem;
   font-weight: bold;
-  color: #3a4e75; /* Цвет текста */
+  color: #3a4e75;
   cursor: pointer;
-  transition: color 0.3s ease; /* Плавное изменение цвета */
+  transition: color 0.3s ease;
 }
 
 .comment-action:hover {
-  color: #2c3e50; /* Цвет при наведении */
+  color: #2c3e50;
 }
 
+.reply-form-container {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
 
+.reply-form-container comment-form {
+  margin-top: 10px;
+}
 
-
-
-
-
-
-
-/* Стили для реплаев */
 .replies {
-  margin-top: 15px; /* Отступ сверху */
-  padding-left: 30px; /* Отступ слева, чтобы реплаи были вложены */
+  margin-top: 15px;
+  padding-left: 30px;
 }
 
 .replies .comment {
-  margin-top: 10px; /* Отступ между реплаем и родительским комментарием */
-  background-color: #f9f9f9; /* Светлый фон для реплаев */
+  margin-top: 10px;
+  background-color: #f9f9f9;
 }
 
-/* Заголовок для каждого реплая */
 .replies .comment-header {
-  background-color: #e0e0e0; /* Немного темнее фон для реплаев */
+  background-color: #e0e0e0;
 }
 
-/* Стили для текста реплая */
 .replies .comment-text {
-  font-size: 0.95rem; /* Немного меньший шрифт для реплаев */
-  color: #555; /* Темно-серый цвет для текста реплая */
+  font-size: 0.95rem;
+  color: #555;
 }
 
-/* Стили для действий реплая */
 .replies .comment-actions {
-  padding-left: 10px; /* Немного больше отступ для действий */
+  padding-left: 10px;
 }
-
-
-
-
-//------------------------------------------
-
 
 .comment-form-reply {
-  max-width: 500px;   // Ограничиваем ширину формы
-  width: 100%;        // Чтобы форма не растягивалась на всю ширину контейнера
-  margin: 10px auto;  // Центрируем форму по горизонтали с отступом сверху
-  padding: 15px;      // Уменьшаем отступы внутри формы
-  border: 1px solid #ddd;  // Рамка для формы
-  border-radius: 10px;     // Закругленные углы для рамки
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Легкая тень
+  max-width: 500px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .comment-form-container {
-  max-width: 600px;  // Сохраняем для основной формы
-  padding: 20px;     // Основной отступ
+  max-width: 600px;
+  padding: 20px;
 }
 
-
-
-
-
-
-//=--------------------------------------------
-
-/* Стили для разделителя */
 .divider {
   width: 100%;
   height: 1px;
-  background-color: #e0e0e0; /* Светлый серый цвет для разделителя */
-  margin: 20px 0; /* Отступы сверху и снизу */
+  background-color: #e0e0e0;
+  margin: 20px 0;
 }
 
-/* Стили для контейнера с комментариями */
 .comment-container {
-  margin-top: 30px; /* Добавляем отступ сверху */
-  padding: 10px 0; /* Внутренние отступы */
+  margin-top: 30px;
+  padding: 10px 0;
 }
 
-/* Стили для кнопок сортировки */
 .sort-buttons {
   display: flex;
-  gap: 10px; /* Расстояние между кнопками */
-  justify-content: flex-start; /* Выравнивание кнопок по левому краю */
-  margin-bottom: 20px; /* Отступ снизу, чтобы разделить кнопки и комментарии */
+  gap: 10px;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  padding: 0;
+  flex-wrap: wrap;
 }
 
-/* Стили для кнопок сортировки */
 .sort-buttons button {
-  padding: 8px 16px; /* Отступы внутри кнопки */
-  font-size: 14px; /* Размер текста */
-  background-color: #f0f0f0; /* Фоновый цвет кнопки */
-  border: 1px solid #ccc; /* Светлая рамка */
-  border-radius: 4px; /* Скругленные углы */
-  cursor: pointer; /* Курсор-указатель */
-  transition: background-color 0.3s ease; /* Плавное изменение фона при наведении */
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
 }
 
 .sort-buttons button:hover {
-  background-color: #e0e0e0; /* Цвет кнопки при наведении */
+  background-color: #e0e0e0;
+}
+
+.sort-buttons button span {
+  margin-left: 8px;
+  font-size: 12px;
 }
 
 .sort-buttons button:focus {
-  outline: none; /* Убираем обводку при фокусе */
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); /* Легкая тень вокруг кнопки при фокусе */
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Стили для блока с комментариями */
+.comments-list {
+  margin-top: 0;
+  padding-top: 10px;
+}
+
 .comments-list {
   display: flex;
-  flex-direction: column; /* Располагаем комментарии вертикально */
-  gap: 10px; /* Отступ между комментариями */
+  flex-direction: column;
+  gap: 10px;
 }
 
+.no-comments-message {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
 
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
 
+.pagination button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #e0e0e0;
+}
+
+.pagination button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 14px;
+  color: #333;
+}
 
 .attached-image {
   max-width: 100%;
@@ -483,7 +500,7 @@ button {
 }
 
 .attached-text {
-  white-space: pre-wrap; /* Сохраняет переносы строк */
+  white-space: pre-wrap;
   background-color: #f5f5f5;
   padding: 10px;
   border-radius: 5px;

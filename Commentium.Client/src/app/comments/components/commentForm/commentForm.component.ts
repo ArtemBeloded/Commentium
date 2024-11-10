@@ -35,8 +35,7 @@ export class CommentFormComponent implements OnInit {
     fileError: string | null = null;
     verifiedFile: File | null = null;
 
-    constructor(
-      private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder) {}
 
     ngOnInit(): void {
       this.createForm();
@@ -120,7 +119,7 @@ export class CommentFormComponent implements OnInit {
       }
     }
 
-    showPreview() {
+    showPreview(): void {
       if (this.form.get('commentContent')?.valid) {
         const rawContent = this.form.get('commentContent')?.value;
         this.previewContent = rawContent;
@@ -128,11 +127,11 @@ export class CommentFormComponent implements OnInit {
       }
     }
 
-    closePreviewModal() {
+    closePreviewModal(): void {
       this.isPreviewModalOpen = false;
     }
 
-    removeFile() {
+    removeFile(): void {
       this.fileError = null;
       this.imageFile = null;
       this.textFile = null;
@@ -140,7 +139,7 @@ export class CommentFormComponent implements OnInit {
       this.clearFileInput();
     }
 
-    handleResizedFile(resizedFile: File) {
+    handleResizedFile(resizedFile: File): void {
       this.verifiedFile = resizedFile;
     }
 

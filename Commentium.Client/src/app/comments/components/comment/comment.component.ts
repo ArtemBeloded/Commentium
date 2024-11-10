@@ -24,33 +24,34 @@ export class CommentComponent implements OnInit{
 
     ngOnInit(): void {
         this.checkCommentFile();
-      }
+    }
     
-      private checkCommentFile(): void {
-        if (this.comment.attachedFile) {
-          const { fileName, contentType, content } = this.comment.attachedFile;
+    private checkCommentFile(): void {
+      if (this.comment.attachedFile) {
+
+        const { fileName, contentType, content } = this.comment.attachedFile;
+
+        const binaryString = window.atob(content);
+        const binaryData = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            binaryData[i] = binaryString.charCodeAt(i);
+        }
     
-          const file = new File([content], fileName, { type: contentType });
-    
-          if (contentType.startsWith('image/')) {
-            // Сохраняем файл изображения
-            this.imageFile = file;
-          } else if (contentType.startsWith('text/')) {
-            // Сохраняем текстовый файл
-            this.textFile = file;
-          }
+        const blob = new Blob([binaryData], { type: contentType });
+        const file = new File([blob], fileName, { type: contentType });
+
+        if (contentType.startsWith('image/')) {
+          this.imageFile = file;
+        } else if (contentType.startsWith('text/')) {
+          this.textFile = file;
         }
       }
-
-    
+    }
 
     isReplying(): boolean {
         if(!this.activeComment){
             return false;
         }
-
         return this.activeComment.commentId === this.comment.commentId
     }
-
-
 }

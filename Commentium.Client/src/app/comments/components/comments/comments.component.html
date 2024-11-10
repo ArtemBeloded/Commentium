@@ -16,25 +16,48 @@
     <div class="divider"></div>
 
     <div class="comment-container">
-        <div class="sort-buttons">
-            <button (click)="sortComments('newest')">Newest</button>
-            <button (click)="sortComments('oldest')">Oldest</button>
-            <button (click)="sortComments('mostLiked')">Most Liked</button>
-        </div>
+        <ng-container *ngIf="pagedList && pagedList.totalCount > 0; else noCommentsMessage">
+            <div class="sort-buttons">
+                <button (click)="sortComments('newest')">
+                    Newest
+                    <span *ngIf="sortDirectionNewest">↓</span>
+                    <span *ngIf="!sortDirectionNewest">↑</span>
+                  </button>
+                  <button (click)="sortComments('username')">
+                    Username
+                    <span *ngIf="sortDirectionUsername">↓</span>
+                    <span *ngIf="!sortDirectionUsername">↑</span>
+                  </button>
+                  <button (click)="sortComments('email')">
+                    Email
+                    <span *ngIf="sortDirectionEmail">↓</span>
+                    <span *ngIf="!sortDirectionEmail">↑</span>
+                  </button>
+            </div>
         
-        <div class="comments-list">
-            <comment
-                *ngFor="let comment of pagedList?.items" 
-                [comment]="comment"
-                [activeComment]="activeComment"
-                (setActiveComment)="setActiveComment($event)"
-                (addComment)="addComment({ 
-                    userName: $event.userName,
-                    email: $event.email,
-                    commentContent: $event.commentContent,
-                    verifiedFile: $event.verifiedFile,
-                    parentId: $event.parentId })"
-            ></comment>
-        </div>
+            <div class="comments-list">
+                <comment
+                    *ngFor="let comment of pagedList?.items" 
+                    [comment]="comment"
+                    [activeComment]="activeComment"
+                    (setActiveComment)="setActiveComment($event)"
+                    (addComment)="addComment({ 
+                        userName: $event.userName,
+                        email: $event.email,
+                        commentContent: $event.commentContent,
+                        verifiedFile: $event.verifiedFile,
+                        parentId: $event.parentId })"
+                ></comment>
+            </div>
+            <div class="divider"></div>
+            <div *ngIf="pagedList" class="pagination">
+                <button (click)="goToPage(pagedList!.page - 1)" [disabled]="!pagedList!.hasPreviousPage">Prev</button>
+                <span>Page {{ pagedList!.page }} of {{ totalPages() }}</span>
+                <button (click)="goToPage(pagedList!.page + 1)" [disabled]="!pagedList!.hasNextPage">Next</button>
+            </div>
+        </ng-container>
+        <ng-template #noCommentsMessage>
+            <div class="no-comments-message">There are no comments yet. Be the first to comment!</div>
+        </ng-template>
     </div>
 </div>

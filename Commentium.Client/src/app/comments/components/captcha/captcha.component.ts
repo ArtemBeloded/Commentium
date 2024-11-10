@@ -19,11 +19,11 @@ export class CaptchaComponent implements OnInit {
 
   constructor(private captchaService: CaptchaService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.generateCaptcha();
   }
 
-  generateCaptcha() {
+  generateCaptcha(): void {
     this.captchaText = this.captchaService.generateCaptchaString();
     const canvas = this.captchaCanvas.nativeElement;
     const context = canvas.getContext('2d');

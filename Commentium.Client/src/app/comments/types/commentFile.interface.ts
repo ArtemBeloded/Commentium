@@ -3,5 +3,5 @@ export interface CommentFile{
     commentId: string,
     fileName: string,
     contentType: string,
-    content: Blob
+    content: string
 }

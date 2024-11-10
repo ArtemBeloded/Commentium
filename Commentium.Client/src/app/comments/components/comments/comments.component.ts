@@ -17,6 +17,10 @@ export class CommentsComponent implements OnInit {
     
     pagedList: PagedList<CommentInterface> | null = null;
     activeComment: CommentInterface | null = null;
+    sortDirectionNewest: boolean = false;
+    sortDirectionUsername: boolean = true;
+    sortDirectionEmail: boolean = true;
+
     @ViewChild(CommentFormComponent) commentFormComponent!: CommentFormComponent;
 
     constructor(private commentsService: CommentsService){}
@@ -25,10 +29,9 @@ export class CommentsComponent implements OnInit {
         this.getPagedListOfComments();
     }
 
-    getPagedListOfComments(): void {
-        this.commentsService.getComments().subscribe((pagedList) => {
+    getPagedListOfComments(sortBy: string = '', direction: string = 'desc', page: number = 1, pageSize = 25): void {
+        this.commentsService.getComments(sortBy, direction, page, pageSize).subscribe((pagedList) => {
             this.pagedList = pagedList;
-            console.log('getPagedListOfComments')
         });
     }
 
@@ -45,7 +48,37 @@ export class CommentsComponent implements OnInit {
         this.activeComment = activeComment;
     }
 
-    sortComments(order: string) : void {
-        console.log('sortComments');
+    sortComments(type: string): void {
+        let sortBy = '';
+        let direction = 'desc';
+    
+        if (type === 'newest') {
+          sortBy = '';
+          this.sortDirectionNewest = !this.sortDirectionNewest;
+          direction = this.sortDirectionNewest ? 'asc' : 'desc';
+        } else if (type === 'username') {
+          sortBy = 'username';
+          this.sortDirectionUsername = !this.sortDirectionUsername;
+          direction = this.sortDirectionUsername ? 'asc' : 'desc';
+        } else if (type === 'email') {
+          sortBy = 'email';
+          this.sortDirectionEmail = !this.sortDirectionEmail;
+          direction = this.sortDirectionEmail ? 'asc' : 'desc';
+        }
+    
+        this.getPagedListOfComments(sortBy, direction);
+    }
+
+    goToPage(page: number): void {
+        if(this.pagedList){
+            if (page < 1 || page > Math.ceil(this.pagedList!.totalCount / this.pagedList!.pageSize)) {
+                return;
+            }
+            this.getPagedListOfComments('', 'desc', page, this.pagedList.pageSize);
+        }
+    }
+
+    totalPages(): number {
+        return Math.ceil(this.pagedList!.totalCount / this.pagedList!.pageSize);
     }
 }
