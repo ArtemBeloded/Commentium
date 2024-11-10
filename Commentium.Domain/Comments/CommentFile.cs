@@ -1,4 +1,9 @@
 ﻿using Commentium.Domain.Shared;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Gif;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Processing;
 using static Commentium.Domain.Errors.DomainErrors;
 
 namespace Commentium.Domain.Comments
@@ -51,12 +56,12 @@ namespace Commentium.Domain.Comments
                 commentId,
                 fileName,
                 contentType,
-                content);
+                isCommentFileCorrectResult.Value);
 
             return commentFile;
         }
 
-        private static Result<bool> IsCommentFileCorrect(
+        private static Result<byte[]> IsCommentFileCorrect(
             string fileName,
             string contentType,
             byte[] content)
@@ -67,7 +72,12 @@ namespace Commentium.Domain.Comments
 
             if (isImageFile)
             {
-                //to do: verificaton??
+                var processedImageResult = ResizingFile(content, fileExtension);
+                if (processedImageResult.IsFailure)
+                {
+                    return Result.Failure<byte[]>(processedImageResult.Error);
+                }
+                return processedImageResult.Value;
             }
             else if (isTextFile)
             {
@@ -75,15 +85,60 @@ namespace Commentium.Domain.Comments
 
                 if (isCommentTextFileCorrectResult.IsFailure) 
                 {
-                    return Result.Failure<bool>(isCommentTextFileCorrectResult.Error);
+                    return Result.Failure<byte[]>(isCommentTextFileCorrectResult.Error);
                 }
+
+                return content;
             }
             else 
             {
-                return Result.Failure<bool>(CommentFileErrors.InvalidFileFormat);
+                return Result.Failure<byte[]>(CommentFileErrors.InvalidFileFormat);
             }
+        }
 
-            return true;
+        private static Result<byte[]> ResizingFile (byte[] content, string fileExtension)
+        {
+            using (var memoryStream = new MemoryStream(content))
+            {
+                using (var image = Image.Load(memoryStream))
+                {
+                    int maxWidth = 320;
+                    int maxHeight = 240;
+
+                    if (image.Width > maxWidth || image.Height > maxHeight)
+                    {
+                        var ratioX = (double)maxWidth / image.Width;
+                        var ratioY = (double)maxHeight / image.Height;
+                        var ratio = Math.Min(ratioX, ratioY);
+
+                        int newWidth = (int)(image.Width * ratio);
+                        int newHeight = (int)(image.Height * ratio);
+
+                        image.Mutate(x => x.Resize(newWidth, newHeight));
+                    }
+
+                    using (var resultStream = new MemoryStream())
+                    {
+                        switch (fileExtension)
+                        {
+                            case ".jpg":
+                            case ".jpeg":
+                                image.Save(resultStream, new JpegEncoder());
+                                break;
+                            case ".png":
+                                image.Save(resultStream, new PngEncoder());
+                                break;
+                            case ".gif":
+                                image.Save(resultStream, new GifEncoder());
+                                break;
+                            default:
+                                image.Save(resultStream, new JpegEncoder());
+                                break;
+                        }
+                        return resultStream.ToArray();
+                    }
+                }
+            }
         }
 
         private static Result<bool> IsCommentTextFileCorrect(byte[] content) 

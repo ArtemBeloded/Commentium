@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: Commentium.API/Dockerfile
     ports:
-      - "5000"
-      - "5001"
+      - "5000:5000"
+      - "5001:5001"
       
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -26,6 +26,22 @@ services:
     ports:
       - "6379:6379"
 
+  commentium-mq:
+    image: rabbitmq:3.11.7-management
+    container_name: Queue
+    hostname: commentium-queue
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - mqdatavolume:/var/lib/rabbitmq
+      - mqlogvalume:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
 
 volumes:
   sqlvolume:
+  mqdatavolume:
+  mqlogvalume:

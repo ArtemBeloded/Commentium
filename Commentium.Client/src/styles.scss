@@ -1,0 +1,492 @@
+
+
+  //-----------------------------------------------------------------
+
+
+
+
+
+
+.comments {
+  background-color: white;  // Мягкий светло-серый фон
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); // Легкая тень для объема
+}
+
+.comments-title {
+  font-size: 1.5rem;
+  color: #4a4a4a;              // Спокойный тёмно-серый цвет текста
+  text-align: center;          // Центрирование текста
+  font-weight: bold;
+  margin: 0;
+}
+
+.comment-form-container {
+  background-color: #fff;                // Белый фон для контейнера
+  border-radius: 10px;                    // Закругленные углы для рамки
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);   // Легкая тень вокруг формы
+  padding: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.comment-form-title {
+  font-size: 1.4rem;
+  color: #3a4e75;                         // Цвет заголовка
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f2f5;      // Легкая линия под заголовком
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3a4e75;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+button {
+  margin-top: 15px;
+}
+
+.comment-form-button {
+  background-color: #3a4e75;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.comment-form-button:disabled {
+  background-color: #c0c0c0;
+}
+
+.comment-form-cancel-button {
+  background-color: #f0f2f5;
+  color: #3a4e75;
+  margin-left: 10px;
+}
+
+.comment-form-cancel-button:hover {
+  background-color: #e1e6ed;
+}
+
+.tag-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tag-toolbar button {
+  background-color: #3a4e75;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tag-toolbar button:hover {
+  background-color: #2c3e50;
+}
+
+.file-upload {
+  margin: 10px 0;
+}
+
+.image-preview {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.image-preview img {
+  width: 160px; /* Превью в два раза меньше */
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.text-preview {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 10px;
+  max-width: 320px;
+  overflow: hidden;
+}
+
+.preview-text-content {
+  cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.image-preview, .text-preview {
+  position: relative;
+  display: inline-block;
+}
+
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный темный фон */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s; /* Плавное изменение цвета */
+}
+
+.delete-button:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Увеличенная прозрачность при наведении */
+}
+
+
+
+
+
+
+
+.text-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
+
+.text-modal-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.close-button {
+  font-size: 24px;
+  font-weight: bold;
+  color: #aaa;
+  float: right;
+  cursor: pointer;
+}
+
+.modal-text {
+  white-space: pre-wrap;
+  font-family: Arial, sans-serif;
+}
+
+.captcha-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: left;
+}
+
+.captcha-canvas {
+  width: 160px;           /* Ширина canvas */
+  height: 120px;          /* Высота canvas */
+  border: 2px solid #ccc;  /* Цвет и толщина рамки */
+  border-radius: 4px;     /* Скругление углов */
+  padding: 4px;           /* Отступ внутри рамки */
+  box-sizing: border-box; /* Учитывает рамку и padding */
+  margin-bottom: 10px;    /* Отступ снизу, чтобы не наезжала на поле ввода */
+}
+
+
+.toast-warning {
+  background-color: #f5e0a3 !important; /* Светло-песочный */
+  color: #3d3d3d !important; /* Темно-серый текст */
+  font-weight: normal;
+  padding: 12px;
+  border-radius: 5px;
+}
+
+.toast-error {
+  background-color: red !important;
+  color: white !important;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+
+//----------------------------------------------------
+.comment {
+  background-color: white; /* Белый фон для карточки */
+  border-radius: 8px; /* Закругленные углы */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+  margin-bottom: 20px; /* Отступ между карточками */
+  max-width: 800px; /* Увеличиваем максимальную ширину комментария */
+  width: 100%; /* Ширина комментария по умолчанию на 100% родительского контейнера */
+  margin-left: 10px; /* Легкий сдвиг вправо */
+  margin-right: auto; /* Центрируем комментарий слева */
+  justify-content: space-between;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  background-color: #f0f2f5; /* Светлый фон для хедера */
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.comment-image-container {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.comment-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%; /* Круглая аватарка */
+}
+
+.comment-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #3a4e75; /* Цвет для имени пользователя */
+}
+
+.comment-date {
+  font-size: 0.875rem; /* Меньший размер шрифта */
+  color: #888; /* Светло-серый цвет для даты */
+}
+
+.comment-action-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.comment-action {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #3a4e75; /* Цвет текста */
+  cursor: pointer;
+  transition: color 0.3s ease; /* Плавное изменение цвета */
+  margin-left: 10px; /* Отступ слева от даты */
+}
+
+.comment-action:hover {
+  color: #2c3e50; /* Цвет при наведении */
+}
+
+.comment-body {
+  padding: 15px;
+}
+
+.comment-text {
+  font-size: 1rem;
+  color: #4a4a4a; /* Цвет текста комментария */
+  line-height: 1.5;
+  white-space: pre-wrap; /* Поддержка переноса строк в комментарии */
+}
+
+.comment-text a {
+  color: #3a4e75; /* Цвет ссылок в комментарии */
+  text-decoration: none;
+}
+
+.comment-text a:hover {
+  text-decoration: underline;
+}
+
+.comment-actions {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: flex-start; /* Выравнивание вправо */
+}
+
+.comment-action {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #3a4e75; /* Цвет текста */
+  cursor: pointer;
+  transition: color 0.3s ease; /* Плавное изменение цвета */
+}
+
+.comment-action:hover {
+  color: #2c3e50; /* Цвет при наведении */
+}
+
+
+
+
+
+
+
+
+
+/* Стили для реплаев */
+.replies {
+  margin-top: 15px; /* Отступ сверху */
+  padding-left: 30px; /* Отступ слева, чтобы реплаи были вложены */
+}
+
+.replies .comment {
+  margin-top: 10px; /* Отступ между реплаем и родительским комментарием */
+  background-color: #f9f9f9; /* Светлый фон для реплаев */
+}
+
+/* Заголовок для каждого реплая */
+.replies .comment-header {
+  background-color: #e0e0e0; /* Немного темнее фон для реплаев */
+}
+
+/* Стили для текста реплая */
+.replies .comment-text {
+  font-size: 0.95rem; /* Немного меньший шрифт для реплаев */
+  color: #555; /* Темно-серый цвет для текста реплая */
+}
+
+/* Стили для действий реплая */
+.replies .comment-actions {
+  padding-left: 10px; /* Немного больше отступ для действий */
+}
+
+
+
+
+//------------------------------------------
+
+
+.comment-form-reply {
+  max-width: 500px;   // Ограничиваем ширину формы
+  width: 100%;        // Чтобы форма не растягивалась на всю ширину контейнера
+  margin: 10px auto;  // Центрируем форму по горизонтали с отступом сверху
+  padding: 15px;      // Уменьшаем отступы внутри формы
+  border: 1px solid #ddd;  // Рамка для формы
+  border-radius: 10px;     // Закругленные углы для рамки
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Легкая тень
+}
+
+.comment-form-container {
+  max-width: 600px;  // Сохраняем для основной формы
+  padding: 20px;     // Основной отступ
+}
+
+
+
+
+
+
+//=--------------------------------------------
+
+/* Стили для разделителя */
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #e0e0e0; /* Светлый серый цвет для разделителя */
+  margin: 20px 0; /* Отступы сверху и снизу */
+}
+
+/* Стили для контейнера с комментариями */
+.comment-container {
+  margin-top: 30px; /* Добавляем отступ сверху */
+  padding: 10px 0; /* Внутренние отступы */
+}
+
+/* Стили для кнопок сортировки */
+.sort-buttons {
+  display: flex;
+  gap: 10px; /* Расстояние между кнопками */
+  justify-content: flex-start; /* Выравнивание кнопок по левому краю */
+  margin-bottom: 20px; /* Отступ снизу, чтобы разделить кнопки и комментарии */
+}
+
+/* Стили для кнопок сортировки */
+.sort-buttons button {
+  padding: 8px 16px; /* Отступы внутри кнопки */
+  font-size: 14px; /* Размер текста */
+  background-color: #f0f0f0; /* Фоновый цвет кнопки */
+  border: 1px solid #ccc; /* Светлая рамка */
+  border-radius: 4px; /* Скругленные углы */
+  cursor: pointer; /* Курсор-указатель */
+  transition: background-color 0.3s ease; /* Плавное изменение фона при наведении */
+}
+
+.sort-buttons button:hover {
+  background-color: #e0e0e0; /* Цвет кнопки при наведении */
+}
+
+.sort-buttons button:focus {
+  outline: none; /* Убираем обводку при фокусе */
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); /* Легкая тень вокруг кнопки при фокусе */
+}
+
+/* Стили для блока с комментариями */
+.comments-list {
+  display: flex;
+  flex-direction: column; /* Располагаем комментарии вертикально */
+  gap: 10px; /* Отступ между комментариями */
+}
+
+
+
+
+.attached-image {
+  max-width: 100%;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.attached-text {
+  white-space: pre-wrap; /* Сохраняет переносы строк */
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-family: monospace;
+}

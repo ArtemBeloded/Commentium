@@ -12,12 +12,14 @@ namespace Commentium.Domain.Comments
             Guid id,
             Guid userId,
             DateTime createdDate,
-            string text)
+            string text,
+            Guid? parentCommentId)
         {
             Id = id;
             UserId = userId;
             CreatedDate = createdDate;
             Text = text;
+            ParentCommentId = parentCommentId;
         }
 
         public Guid Id { get; private set; }
@@ -38,7 +40,8 @@ namespace Commentium.Domain.Comments
 
         public static Result<Comment> Create(
             Guid userId,
-            string text)
+            string text,
+            Guid? parentCommentId)
         {
             var isTextCorrectResult = IsTextCorrect(text);
 
@@ -51,7 +54,8 @@ namespace Commentium.Domain.Comments
                 Guid.NewGuid(),
                 userId,
                 DateTime.Now,
-                text);
+                text,
+                parentCommentId);
 
             return comment;
         }
@@ -68,14 +72,7 @@ namespace Commentium.Domain.Comments
                 return Result.Failure<bool>(CommentContentErrors.Empty);
             }
 
-            var allowedTagsPattern = @"^([^<>]*|(<a\s+href=""[^""]*""(\s+title=""[^""]*"")?>[^<>]*<\/a>)|(<code>[^<>]*<\/code>)|(<i>[^<>]*<\/i>)|(<strong>[^<>]*<\/strong>))*$";
-            //to do: change text pattern
-            //test cases
-            //4 < 5 - true,
-            //<strong>Жирный текст</strong> и 4 < 5 - true,
-            //<a href=\"https://example.com\">ссылка</a> и 3 > 2 - true,
-            //<b>неразрешенный тег</b> - false,
-            //<code>int x = 5; < 10</code> - true
+            var allowedTagsPattern = @"^(<a href='.*' title='.*'>.*<\/a>|<code>.*<\/code>|<i>.*<\/i>|<strong>.*<\/strong>|[^<>]*)*$";
 
             var isValid = Regex.IsMatch(text, allowedTagsPattern, RegexOptions.Singleline);
 

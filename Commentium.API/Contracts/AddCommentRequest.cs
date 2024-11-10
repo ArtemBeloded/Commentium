@@ -4,5 +4,6 @@
         string UserName,
         string Email,
         string Text,
+        Guid? ParentCommentId,
         IFormFile? File);
 }

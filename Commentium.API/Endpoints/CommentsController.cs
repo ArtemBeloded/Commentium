@@ -26,6 +26,7 @@ namespace Commentium.API.Endpoints
                 request.UserName,
                 request.Email,
                 request.Text,
+                request.ParentCommentId,
                 request.File is null ?
                 null
                 : new CreateCommentFileCommand(

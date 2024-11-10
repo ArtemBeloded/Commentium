@@ -1,7 +1,9 @@
 ﻿using Commentium.Application.Abstractions.Caching;
+using Commentium.Application.Abstractions.EventBus;
 using Commentium.Domain.Comments;
 using Commentium.Domain.Users;
 using Commentium.Persistence.Caching;
+using Commentium.Persistence.MessageBroker;
 using Commentium.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +24,8 @@ namespace Commentium.Persistence
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddSingleton<ICacheService, CacheService>();
+
+            services.AddTransient<IEventBus, EventBus>();
 
             return services;
         }

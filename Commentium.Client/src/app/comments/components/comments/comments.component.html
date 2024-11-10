@@ -1,0 +1,40 @@
+<div class="comments">
+    <h3 class="comments-title">Commentium</h3>
+    <div class="comment-form-container">
+        <div class="comment-form-title">Write comment</div>
+        <comment-form 
+            submitLabel="Write"
+            (handleSubmit)="addComment({
+            userName: $event.userName,
+            email: $event.email,
+            commentContent: $event.commentContent,
+            verifiedFile: $event.verifiedFile,
+            parentId: null})"
+        ></comment-form>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="comment-container">
+        <div class="sort-buttons">
+            <button (click)="sortComments('newest')">Newest</button>
+            <button (click)="sortComments('oldest')">Oldest</button>
+            <button (click)="sortComments('mostLiked')">Most Liked</button>
+        </div>
+        
+        <div class="comments-list">
+            <comment
+                *ngFor="let comment of pagedList?.items" 
+                [comment]="comment"
+                [activeComment]="activeComment"
+                (setActiveComment)="setActiveComment($event)"
+                (addComment)="addComment({ 
+                    userName: $event.userName,
+                    email: $event.email,
+                    commentContent: $event.commentContent,
+                    verifiedFile: $event.verifiedFile,
+                    parentId: $event.parentId })"
+            ></comment>
+        </div>
+    </div>
+</div>

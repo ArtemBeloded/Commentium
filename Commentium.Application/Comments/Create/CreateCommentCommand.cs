@@ -7,6 +7,7 @@ namespace Commentium.Application.Comments.Create
         string UserName,
         string Email,
         string Text,
+        Guid? ParentCommentId,
         CreateCommentFileCommand? File) : IRequest<Result>;
 
     public record CreateCommentFileCommand(

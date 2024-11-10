@@ -1,4 +1,5 @@
 ﻿using Commentium.Application.Abstractions.Caching;
+using Commentium.Application.Abstractions.EventBus;
 using Commentium.Domain.Comments;
 using Commentium.Domain.Shared;
 using Commentium.Domain.Users;
@@ -13,15 +14,18 @@ namespace Commentium.Application.Comments.Create
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
         private readonly ICacheService _cacheService;
+        private readonly IEventBus _eventBus;
 
         public CreateCommentCommandHandler(
             ICommentRepository commentRepository,
             IUserRepository userRepository,
-            ICacheService cacheService)
+            ICacheService cacheService,
+            IEventBus eventBus)
         {
             _commentRepository = commentRepository;
             _userRepository = userRepository;
             _cacheService = cacheService;
+            _eventBus = eventBus;
         }
 
         public async Task<Result> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
@@ -46,7 +50,7 @@ namespace Commentium.Application.Comments.Create
                 return Result.Failure(UserErrors.InvalidUserName);
             }
 
-            var commentCreateResult = Comment.Create(user.Id, request.Text);
+            var commentCreateResult = Comment.Create(user.Id, request.Text, request.ParentCommentId);
 
             if (commentCreateResult.IsFailure) 
             {
@@ -74,6 +78,16 @@ namespace Commentium.Application.Comments.Create
             await _commentRepository.Add(comment);
 
             await _cacheService.RemoveByPrefixAsync("comments", cancellationToken);
+
+            await _eventBus.PublishAsync(
+                new CommentCreatedEvent
+                {
+                    Id = comment.Id,
+                    UserName = user.UserName,
+                    CommentContent = comment.Text,
+                    CreatedDate = comment.CreatedDate,
+                    IsFileAttached = comment.AttachedFile is not null
+                }, cancellationToken);
 
             return Result.Success();
         }

@@ -1,0 +1,82 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="userName">UserName</label>
+      <input
+        type="text"
+        id="userName"
+        class="form-control"
+        formControlName="userName"
+        placeholder="Enter your username"
+      />
+      <div *ngIf="form.get('userName')?.invalid && form.get('userName')?.touched" class="error-message">
+        <small *ngIf="form.get('userName')?.hasError('required')">UserName is required.</small>
+        <small *ngIf="form.get('userName')?.hasError('pattern')">UserName must contain only letters and numbers.</small>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        class="form-control"
+        formControlName="email"
+        placeholder="Enter your email"
+      />
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="error-message">
+        <small *ngIf="form.get('email')?.hasError('required')">Email is required.</small>
+        <small *ngIf="form.get('email')?.hasError('pattern')">Please enter a valid email address.</small>
+      </div>
+    </div>
+
+    <captcha (captchaValid)="onCaptchaValidation($event)"></captcha>
+  
+    <div class="tag-toolbar">
+      <button type="button" (click)="addTag('<a href=\'\' title=\'\'></a>')">a</button>
+      <button type="button" (click)="addTag('<code></code>')">code</button>
+      <button type="button" (click)="addTag('<i></i>')">i</button>
+      <button type="button" (click)="addTag('<strong></strong>')">strong</button>
+    </div>
+
+    <textarea class="comment-form-textarea" formControlName="commentContent" placeholder="Write your comment"></textarea>
+    <div *ngIf="form.get('commentContent')?.invalid && form.get('commentContent')?.touched" class="error-message">
+      <small *ngIf="form.get('commentContent')?.hasError('invalidContent')">Invalid tags or tags are not properly closed.</small>
+    </div>
+
+    <div *ngIf="form.get('commentContent')?.valid">
+      <a href="javascript:void(0);" (click)="showPreview()">Preview content</a>
+    </div>
+      
+    <div *ngIf="isPreviewModalOpen" class="text-modal">
+      <div class="text-modal-content">
+        <span class="close-button" (click)="closePreviewModal()">&times;</span>
+        <pre class="modal-text" [innerHTML]="previewContent"></pre>
+      </div>
+    </div>
+
+    <div class="file-upload">
+      <label for="fileUpload">Upload Image or Text File</label>
+      <input type="file" #fileInput id="fileUpload" (change)="onFileSelected($event)" />
+      <div *ngIf="fileError" class="error-message">{{ fileError }}</div>
+
+      <image-preview
+        [deleteButton]="true"
+        [imageFile]="imageFile"
+        (resizedFile)="handleResizedFile($event)"
+        (fileRemoved)=removeFile()
+      ></image-preview>
+
+      <text-file-preview
+        [deleteButton]="true"
+        [textFile]="textFile"
+        (textFileRemoved)=removeFile()
+      ></text-file-preview>
+    </div>
+
+    <button class="comment-form-button" type="submit" [disabled]="form.invalid || !isCaptchaValid">
+      {{ submitLabel }}
+    </button>
+    <button *ngIf="hasCancelButton" type="button" class="comment-form-button comment-form-cancel-button" (click)="handleCancel.emit()">
+      Cancel
+    </button>
+</form>
