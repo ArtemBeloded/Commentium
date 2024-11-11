@@ -1,7 +1,6 @@
 ﻿using Commentium.Domain.Shared;
 using Commentium.Domain.Users;
-using System.Text.RegularExpressions;
-using System.Xml;
+using Ganss.Xss;
 using static Commentium.Domain.Errors.DomainErrors;
 
 namespace Commentium.Domain.Comments
@@ -67,32 +66,27 @@ namespace Commentium.Domain.Comments
 
         private static Result<bool> IsTextCorrect(string text) 
         {
-            if (string.IsNullOrWhiteSpace(text)) 
+            if (string.IsNullOrWhiteSpace(text))
             {
                 return Result.Failure<bool>(CommentContentErrors.Empty);
             }
 
-            var allowedTagsPattern = @"^(<a href='.*' title='.*'>.*<\/a>|<code>.*<\/code>|<i>.*<\/i>|<strong>.*<\/strong>|[^<>]*)*$";
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.AllowedTags.Add("a");
+            sanitizer.AllowedTags.Add("code");
+            sanitizer.AllowedTags.Add("i");
+            sanitizer.AllowedTags.Add("strong");
+            sanitizer.AllowedAttributes.Add("href");
+            sanitizer.AllowedAttributes.Add("title");
 
-            var isValid = Regex.IsMatch(text, allowedTagsPattern, RegexOptions.Singleline);
+            var sanitizedText = sanitizer.Sanitize(text);
 
-            if (!isValid)
+            if (sanitizedText != text)
             {
                 return Result.Failure<bool>(CommentContentErrors.InvalidHTMLTags);
             }
 
-            try
-            {
-                var wrappedText = $"<root>{text}</root>";
-                var xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(wrappedText);
-
-                return true;
-            }
-            catch (XmlException)
-            {
-                return Result.Failure<bool>(CommentContentErrors.UnclosedHTMLTags);
-            }
+            return true;
         } 
     }
 }

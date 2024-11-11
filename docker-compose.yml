@@ -40,6 +40,15 @@ services:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
 
+  commentium.client:
+    image: commentiumclient 
+    container_name: commentium-client 
+    build:
+      context: .
+      dockerfile: Commentium.Client/Dockerfile
+    ports:
+      - "4200:4200"
+
 
 volumes:
   sqlvolume:
