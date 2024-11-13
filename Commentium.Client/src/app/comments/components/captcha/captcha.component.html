@@ -1,0 +1,5 @@
+<div class="captcha-container">
+    <canvas #captchaCanvas class="captcha-canvas"></canvas>
+    <input type="text" [(ngModel)]="captchaInput" placeholder="Enter captcha" (input)="validateCaptcha()" />
+    <small *ngIf="isCaptchaInvalid" class="error-message">Please enter a valid captcha.</small>
+</div>

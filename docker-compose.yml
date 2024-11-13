@@ -1,0 +1,61 @@
+services:
+  commentium.api:
+    image: ${DOCKER_REGISTRY-}commentiumapi
+    container_name: commentium-api
+    build:
+      context: .
+      dockerfile: Commentium.API/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    depends_on:
+      - sqlserver
+      - commentium-mq
+  
+  commentium.cache:
+    container_name: commentium-cache
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+
+  commentium-mq:
+    image: rabbitmq:3.11.7-management
+    container_name: commentium-queue
+    hostname: commentium-queue
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - mqdatavolume:/var/lib/rabbitmq
+      - mqlogvalume:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  commentium.client:
+    image: commentiumclient 
+    container_name: commentium-client 
+    build:
+      context: .
+      dockerfile: Commentium.Client/Dockerfile
+    ports:
+      - "4200:4200"
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: commentium-database
+    environment:
+      SA_PASSWORD: "Password12345!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlvolume:/var/opt/mssql
+
+
+volumes:
+  sqlvolume:
+  mqdatavolume:
+  mqlogvalume:
+ 

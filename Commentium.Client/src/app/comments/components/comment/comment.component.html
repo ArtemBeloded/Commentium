@@ -1,0 +1,60 @@
+
+<div class="comment">
+    <div class="comment-header">
+      <div class="comment-image-container">
+        <img src="/assets/user-icon.png" alt="User" />
+      </div>
+      <div class="comment-info">
+        <div class="comment-author">{{ comment.userName }}</div>
+        <div class="comment-date">{{ comment.createdDate | date: 'short' }}</div>
+      </div>
+
+      <div class="comment-action-container">
+        <div class="comment-action" (click)="setActiveComment.emit(comment)">Reply</div>
+      </div>
+    </div>
+  
+    <div class="comment-body">
+      <div class="comment-text" [innerHTML]="comment.text"></div>
+
+      <image-preview
+        [deleteButton]="false"
+        [imageFile]="imageFile"
+      ></image-preview>
+
+      <text-file-preview
+        [deleteButton]="false"
+        [textFile]="textFile"
+      ></text-file-preview>
+
+      <div class="reply-form-container" *ngIf="isReplying()">
+        <comment-form
+          submitLabel="Reply"
+          [hasCancelButton]="true"
+          (handleCancel)="setActiveComment.emit(null)"
+          (handleSubmit)="addComment.emit({
+            userName: $event.userName,
+            email: $event.email,
+            commentContent: $event.commentContent,
+            verifiedFile: $event.verifiedFile,
+            parentId: comment.commentId})"
+        ></comment-form>
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="replies" *ngIf="comment.replies.length > 0">
+    <comment
+      *ngFor="let reply of comment.replies"
+      [comment]="reply"
+      (setActiveComment)="setActiveComment.emit($event)"
+      [activeComment]="activeComment"
+      (addComment)="addComment.emit({
+        userName: $event.userName,
+        email: $event.email,
+        commentContent: $event.commentContent,
+        verifiedFile: $event.verifiedFile,
+        parentId: $event.parentId})"
+    ></comment>
+  </div>

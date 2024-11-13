@@ -1,0 +1,4 @@
+<div *ngIf="thumbnail" class="image-preview">
+    <img [src]="thumbnail" (click)="openLightbox(0)" alt="Preview image" />
+    <button *ngIf="deleteButton" class="delete-button" type="button" (click)="removeImage()">&#10005;</button>
+</div>

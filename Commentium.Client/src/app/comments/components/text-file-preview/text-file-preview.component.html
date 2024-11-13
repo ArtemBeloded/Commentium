@@ -1,0 +1,11 @@
+<div *ngIf="thumbnailText" class="text-preview">
+    <img [src]="thumbnailText" (click)="openTextFileModal()" alt="Preview text file" />
+    <button *ngIf="deleteButton" class="delete-button" type="button" (click)="removeTextFile()">&#10005;</button>
+  </div>
+
+  <div *ngIf="isTextModalOpen" class="text-modal">
+    <div class="text-modal-content">
+      <span class="close-button" (click)="closeTextFileModal()">&times;</span>
+      <pre class="modal-text">{{ fullText }}</pre>
+    </div>
+  </div>
