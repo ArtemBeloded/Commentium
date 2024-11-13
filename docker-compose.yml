@@ -8,19 +8,12 @@ services:
     ports:
       - "5000:5000"
       - "5001:5001"
-      
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: commentium.database
-    environment:
-        SA_PASSWORD: "Password12345!"
-        ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"
-    volumes:
-      - sqlvolume:/var/opt/mssql  
+    depends_on:
+      - sqlserver
+      - commentium-mq
   
   commentium.cache:
+    container_name: commentium-cache
     image: redis:latest
     restart: always
     ports:
@@ -28,7 +21,7 @@ services:
 
   commentium-mq:
     image: rabbitmq:3.11.7-management
-    container_name: Queue
+    container_name: commentium-queue
     hostname: commentium-queue
     ports:
       - "5672:5672"
@@ -49,8 +42,20 @@ services:
     ports:
       - "4200:4200"
 
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: commentium-database
+    environment:
+      SA_PASSWORD: "Password12345!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlvolume:/var/opt/mssql
+
 
 volumes:
   sqlvolume:
   mqdatavolume:
   mqlogvalume:
+ 

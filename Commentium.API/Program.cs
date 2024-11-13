@@ -54,8 +54,9 @@ namespace Commentium.API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-                app.ApplyMigrations();
             }
+
+            app.ApplyMigrations();
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
