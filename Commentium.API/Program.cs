@@ -17,8 +17,7 @@ namespace Commentium.API
 
             builder.Services.AddStackExchangeRedisCache(redisOptions =>
             {
-                string connection = builder.Configuration
-                    .GetConnectionString("Redis");
+                string connection = builder.Configuration["Redis"]!;
 
                 redisOptions.Configuration = connection;
             });
@@ -27,7 +26,10 @@ namespace Commentium.API
             builder.Services.AddApplication();
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                options.AddPolicy("AllowOrigin",
+                    options => options.WithOrigins(builder.Configuration["CORS_ORIGIN_URL"]!)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
             });
 
             builder.Services.AddMassTransit(busConfigurator =>
@@ -40,8 +42,8 @@ namespace Commentium.API
                 {
                     configurator.Host(new Uri(builder.Configuration["MessageBroker:Host"]!), h =>
                     {
-                        h.Username(builder.Configuration["MessageBroker:Username"]);
-                        h.Password(builder.Configuration["MessageBroker:Password"]);
+                        h.Username(builder.Configuration["MessageBroker_Username"]!);
+                        h.Password(builder.Configuration["MessageBroker_Password"]!);
                     });
 
                     configurator.ConfigureEndpoints(context);
@@ -57,7 +59,7 @@ namespace Commentium.API
             }
 
             app.ApplyMigrations();
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors("AllowOrigin");
 
             app.UseHttpsRedirection();
             app.MapControllers();

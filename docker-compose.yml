@@ -11,6 +11,13 @@ services:
     depends_on:
       - sqlserver
       - commentium-mq
+    environment:
+      - DefaultConnection=Server=host.docker.internal,1433;Database=CommentiumDb;User Id=sa;Password=Password12345!;Trust Server Certificate=True;
+      - Redis=commentium.cache:6379
+      - MessageBroker_Host=amqp://commentium-queue:5672
+      - MessageBroker_Username=guest
+      - MessageBroker_Password=guest
+      - CORS_ORIGIN_URL=http://localhost:4200
   
   commentium.cache:
     container_name: commentium-cache
@@ -46,7 +53,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: commentium-database
     environment:
-      SA_PASSWORD: "Password12345!"
+      SA_PASSWORD: Password12345!
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"

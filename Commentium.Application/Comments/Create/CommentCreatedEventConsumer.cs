@@ -14,7 +14,7 @@ namespace Commentium.Application.Comments.Create
 
         public Task Consume(ConsumeContext<CommentCreatedEvent> context)
         {
-            _logger.LogInformation("Comment created: {@Comment}", context.Message);
+            _logger.LogWarning("Comment created: {@Comment}", context.Message);
 
             return Task.CompletedTask;
         }
