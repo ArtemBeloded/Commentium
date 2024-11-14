@@ -1,6 +1,6 @@
 services:
   commentium.api:
-    image: ${DOCKER_REGISTRY-}commentiumapi
+    image: commentiumapi
     container_name: commentium-api
     build:
       context: .
